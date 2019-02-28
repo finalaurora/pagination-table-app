@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Record } from './record.model';
+import { PaginationInstance } from 'ngx-pagination';
 @Component({
-  selector: 'app-record-search',
-  templateUrl: './record-search.component.html',
-  styleUrls: ['./record-search.component.css']
+  selector: 'app-record-list',
+  templateUrl: './record-list.component.html',
+  styleUrls: ['./record-list.component.css']
 })
-export class RecordSearchComponent implements OnInit {
+export class RecordListComponent implements OnInit {
   records: Record[] = [
     {
       userId: 'mfattorini0',
@@ -708,11 +709,17 @@ export class RecordSearchComponent implements OnInit {
       operatorId: 'wbusfield2r'
     }
   ];
-  totalItems: number;
-  totalPages: number;
-  itemPerPage: number;
-  currentPage: number;
-  constructor() {}
-
+  config: PaginationInstance = {
+    itemsPerPage: 5,
+    currentPage: 1
+  };
+  values: number[];
+  constructor() {
+    this.values = [5, 10, 15];
+  }
+  onItemsPerPageChanged(event: any): void {
+    this.config.itemsPerPage = event.target.value;
+    console.log('Items per page', this.config.itemsPerPage);
+  }
   ngOnInit() {}
 }
